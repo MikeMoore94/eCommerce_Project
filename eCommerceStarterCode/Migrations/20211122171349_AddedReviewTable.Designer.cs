@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eCommerceStarterCode.Data;
 
 namespace eCommerceStarterCode.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211122171349_AddedReviewTable")]
+    partial class AddedReviewTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,25 +50,15 @@ namespace eCommerceStarterCode.Migrations
                     b.HasData(
                         new
                         {
-<<<<<<< HEAD
-                            Id = "066c3515-4ad1-449e-9a99-cae06891532a",
-                            ConcurrencyStamp = "ca08a55d-586d-4292-a0c6-08d8eb2647c4",
-=======
                             Id = "376636ab-f34b-4954-8dad-cba7aedee026",
                             ConcurrencyStamp = "442e67e2-54eb-44ae-98ce-7524f37efc21",
->>>>>>> 28213fa846c88e95244daf42fbeb9b0128bf370d
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-<<<<<<< HEAD
-                            Id = "6d260cff-a0ab-4e09-a849-4c2531d02b3e",
-                            ConcurrencyStamp = "1b47e8ad-3fa0-4e01-9f47-f7b3cbdf258f",
-=======
                             Id = "b162547c-7f47-4efa-a02d-14cf8768190c",
                             ConcurrencyStamp = "ff231e89-352d-4c3e-b28f-b7fea491c6fc",
->>>>>>> 28213fa846c88e95244daf42fbeb9b0128bf370d
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -197,28 +189,13 @@ namespace eCommerceStarterCode.Migrations
                     b.ToTable("Products");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("eCommerceStarterCode.Models.ShoppingCart", b =>
-                {
-                    b.Property<int>("Quantity")
-=======
             modelBuilder.Entity("eCommerceStarterCode.Models.Review", b =>
                 {
                     b.Property<int>("ReviewId")
->>>>>>> 28213fa846c88e95244daf42fbeb9b0128bf370d
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-<<<<<<< HEAD
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-=======
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -226,27 +203,18 @@ namespace eCommerceStarterCode.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Rating")
->>>>>>> 28213fa846c88e95244daf42fbeb9b0128bf370d
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-<<<<<<< HEAD
-                    b.HasKey("Quantity");
-=======
                     b.HasKey("ReviewId");
->>>>>>> 28213fa846c88e95244daf42fbeb9b0128bf370d
 
                     b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
 
-<<<<<<< HEAD
-                    b.ToTable("ShoppingCarts");
-=======
                     b.ToTable("Reviews");
->>>>>>> 28213fa846c88e95244daf42fbeb9b0128bf370d
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.User", b =>
@@ -371,11 +339,7 @@ namespace eCommerceStarterCode.Migrations
                         .IsRequired();
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("eCommerceStarterCode.Models.ShoppingCart", b =>
-=======
             modelBuilder.Entity("eCommerceStarterCode.Models.Review", b =>
->>>>>>> 28213fa846c88e95244daf42fbeb9b0128bf370d
                 {
                     b.HasOne("eCommerceStarterCode.Models.Product", "Product")
                         .WithMany()

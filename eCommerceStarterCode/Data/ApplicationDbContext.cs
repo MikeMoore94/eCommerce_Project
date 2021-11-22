@@ -8,7 +8,8 @@ namespace eCommerceStarterCode.Data
     public class ApplicationDbContext : IdentityDbContext<User>
     {
         public DbSet<Product> Products { get; set; }
-        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set;}
         public ApplicationDbContext(DbContextOptions options)
             :base(options)
         {
