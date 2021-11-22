@@ -44,16 +44,6 @@ namespace eCommerceStarterCode.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "066c3515-4ad1-449e-9a99-cae06891532a", "ca08a55d-586d-4292-a0c6-08d8eb2647c4", "User", "USER" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "6d260cff-a0ab-4e09-a849-4c2531d02b3e", "1b47e8ad-3fa0-4e01-9f47-f7b3cbdf258f", "Admin", "ADMIN" });
-
             migrationBuilder.CreateIndex(
                 name: "IX_ShoppingCarts_ProductId",
                 table: "ShoppingCarts",
@@ -80,15 +70,6 @@ namespace eCommerceStarterCode.Migrations
                 keyColumn: "Id",
                 keyValue: "6d260cff-a0ab-4e09-a849-4c2531d02b3e");
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "9bc2ff3e-7d80-4fb5-89f5-7d8592e6320d", "e4a0dd84-ed49-4e8b-9266-9d3091fcdd9e", "User", "USER" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "2580e258-9baf-45ff-ab4a-41627c0b3ec5", "f42e4f07-f60f-4d0c-8ecf-59fd0da99e96", "Admin", "ADMIN" });
         }
     }
 }
