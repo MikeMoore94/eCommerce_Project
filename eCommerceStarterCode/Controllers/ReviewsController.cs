@@ -17,7 +17,8 @@ namespace eCommerceStarterCode.Controllers
         {
             _context = context;
         }
-        // GET: api/<ReviewsController>
+        
+        // GET
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -32,7 +33,7 @@ namespace eCommerceStarterCode.Controllers
         //    return "value";
         //}
 
-        // POST api/<ReviewsController>
+        // POST 
         [HttpPost, Authorize]
         public IActionResult Post([FromBody] Review value)
         {
@@ -42,7 +43,7 @@ namespace eCommerceStarterCode.Controllers
             return Ok(value);
         }
 
-        // PUT api/<ReviewsController>/5
+        // PUT 
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Review value)
         {
@@ -54,7 +55,7 @@ namespace eCommerceStarterCode.Controllers
             return Ok(review);
         }
 
-        // DELETE api/<ReviewsController>/5
+        // DELETE
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
