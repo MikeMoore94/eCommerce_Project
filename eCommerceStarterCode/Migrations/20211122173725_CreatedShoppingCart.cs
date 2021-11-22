@@ -2,7 +2,7 @@
 
 namespace eCommerceStarterCode.Migrations
 {
-    public partial class AddedReviewTable : Migration
+    public partial class CreatedShoppingCart : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,27 +17,27 @@ namespace eCommerceStarterCode.Migrations
                 keyValue: "9bc2ff3e-7d80-4fb5-89f5-7d8592e6320d");
 
             migrationBuilder.CreateTable(
-                name: "Reviews",
+                name: "ShoppingCarts",
                 columns: table => new
                 {
-                    ReviewId = table.Column<int>(type: "int", nullable: false)
+                    Quantity = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Rating = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ProductId = table.Column<int>(type: "int", nullable: false)
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reviews", x => x.ReviewId);
+                    table.PrimaryKey("PK_ShoppingCarts", x => x.Quantity);
                     table.ForeignKey(
-                        name: "FK_Reviews_AspNetUsers_UserId",
+                        name: "FK_ShoppingCarts_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Reviews_Products_ProductId",
+                        name: "FK_ShoppingCarts_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
@@ -45,32 +45,31 @@ namespace eCommerceStarterCode.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_ProductId",
-                table: "Reviews",
+                name: "IX_ShoppingCarts_ProductId",
+                table: "ShoppingCarts",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_UserId",
-                table: "Reviews",
+                name: "IX_ShoppingCarts_UserId",
+                table: "ShoppingCarts",
                 column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Reviews");
+                name: "ShoppingCarts");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "376636ab-f34b-4954-8dad-cba7aedee026");
+                keyValue: "066c3515-4ad1-449e-9a99-cae06891532a");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "b162547c-7f47-4efa-a02d-14cf8768190c");
+                keyValue: "6d260cff-a0ab-4e09-a849-4c2531d02b3e");
 
-           
         }
     }
 }

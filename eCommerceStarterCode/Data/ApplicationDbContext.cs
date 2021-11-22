@@ -9,6 +9,7 @@ namespace eCommerceStarterCode.Data
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set;}
         public ApplicationDbContext(DbContextOptions options)
             :base(options)
         {
