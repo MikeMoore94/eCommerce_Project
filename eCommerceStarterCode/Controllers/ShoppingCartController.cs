@@ -61,7 +61,7 @@ namespace eCommerceStarterCode.Controllers
         {
 
             var productToDelete = _context.ShoppingCarts
-                .Where(u => u.CartId == Id)
+                .Where(u => u.ShoppingCartId == Id)
                 .SingleOrDefault();
 
             if (productToDelete == null)

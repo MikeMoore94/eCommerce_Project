@@ -3,6 +3,7 @@ using eCommerceStarterCode.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 
 
@@ -17,7 +18,7 @@ namespace eCommerceStarterCode.Controllers
         {
             _context = context;
         }
-        
+
         // GET
         [HttpGet("{id}")]
         public IActionResult Get(int id)
@@ -26,15 +27,10 @@ namespace eCommerceStarterCode.Controllers
             return Ok(reviews);
         }
 
-        // GET api/<ReviewsController>/5
-        //[HttpGet("{id}")]
-        //public IActionResult Get(int id)
-        //{
-        //    return "value";
-        //}
+
 
         // POST 
-        [HttpPost, Authorize]
+        [HttpPost]
         public IActionResult Post([FromBody] Review value)
         {
             _context.Reviews.Add(value);
@@ -42,7 +38,6 @@ namespace eCommerceStarterCode.Controllers
             _context.SaveChanges();
             return Ok(value);
         }
-
         // PUT 
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Review value)
