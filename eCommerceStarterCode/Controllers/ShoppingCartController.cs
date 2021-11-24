@@ -1,103 +1,80 @@
-﻿using eCommerceStarterCode.Data;
+﻿using System.Linq;
+using System.Security.Claims;
+using eCommerceStarterCode.Data;
 using eCommerceStarterCode.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace eCommerceStarterCode.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/shoppingcart")]
     [ApiController]
     public class ShoppingCartController : ControllerBase
     {
-        private ApplicationDbContext _context;
-
+        private readonly ApplicationDbContext _context;
         public ShoppingCartController(ApplicationDbContext context)
         {
             _context = context;
         }
-        [HttpGet("shoppingCart")]
 
-        public IActionResult GetCart()
+        // GET 
+        [HttpGet]
+        public IActionResult GetAll()
         {
-            //everthing that is currently in the cart
-            var cart = _context.ShoppingCarts.ToList();
-            return Ok(cart);
-        }
+            var shoppingCart = _context.ShoppingCarts
+                .ToList();
 
-        [HttpGet("shoppingCart/{userid}")]
-
-        public IActionResult GetMyCart(string userid)
-        {
-            //everthing that is currently in the cart
-            var cart = _context.ShoppingCarts.Where(u => u.UserId == userid);
-            return Ok(cart);
-        }
-
-        [HttpDelete("shoppingCart/{userid}/delete/{Id}")]
-
-        public IActionResult DeleteItem(string userid, int Id)
-        {
-
-            var productToDelete = _context.ShoppingCarts
-                .Where(u => u.UserId == userid && u.ProductId == Id)
-                .SingleOrDefault();
-
-            if (productToDelete == null)
+            if (shoppingCart == null)
             {
-                return NotFound($"Product = {Id} not found");
+                return NotFound();
             }
-            _context.ShoppingCarts.Remove(productToDelete);
-            _context.SaveChanges();
-            return StatusCode(200, productToDelete);
+            return Ok(shoppingCart);
         }
-        [HttpDelete("shoppingCart/delete/{cartId}")]
 
-        public IActionResult DelectProduct(int Id)
+        // GET 
+        [HttpGet("{userId}")]
+        public IActionResult Get(string userId)
         {
+            var shoppingCart = _context.ShoppingCarts
+                .Where(sc => sc.UserId == userId)
+                .Include(sc => sc.Product)
+                .Select(sc => new {
+                    sc.UserId,
+                    sc.ProductId,
+                    sc.Product.Name,
+                    sc.Product.Description,
+                    sc.Quantity,
+                    sc.Product.Price,
+                    ItemSubtotal = sc.Quantity * sc.Product.Price
+                })
+                .ToList();
 
-            var productToDelete = _context.ShoppingCarts
-                .Where(u => u.ShoppingCartId == Id)
-                .SingleOrDefault();
-
-            if (productToDelete == null)
+            if (shoppingCart == null)
             {
-                return NotFound($"book with BookId = {Id} not found");
+                return NotFound();
             }
-            _context.ShoppingCarts.Remove(productToDelete);
-            _context.SaveChanges();
-            return StatusCode(200, productToDelete);
+            return Ok(shoppingCart);
         }
 
-        [HttpPost("shoppingCart/addProduct/")]
-
-        public IActionResult AddProduct([FromBody] ShoppingCart value)
+        // POST 
+        [HttpPost]
+        public IActionResult Post([FromBody] ShoppingCart value)
         {
+
             _context.ShoppingCarts.Add(value);
             _context.SaveChanges();
             return StatusCode(201, value);
         }
 
-        [HttpPut("shoppingCart/update/{userId}/{Id:int}")]
-
-        public IActionResult UpdateCart(string userId, int Id, [FromBody] ShoppingCart value)
+        // DELETE 
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
-            var cart = _context.ShoppingCarts.Where(u => u.UserId == userId && u.ProductId == Id).SingleOrDefault();
-            if (cart == null)
-            {
-                return NotFound("No shopping cart that meets that criteria");
-            }
-
-            cart.Quantity = value.Quantity;
-
-            _context.ShoppingCarts.Update(cart);
+            var shoppingCart = _context.ShoppingCarts.FirstOrDefault(sc => sc.ShoppingCartId == id);
+            _context.Remove(shoppingCart);
             _context.SaveChanges();
-            return StatusCode(201, value);
+            return Ok();
         }
+        
     }
-
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eCommerceStarterCode.Data;
 
 namespace eCommerceStarterCode.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211124005233_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -382,13 +384,13 @@ namespace eCommerceStarterCode.Migrations
             modelBuilder.Entity("eCommerceStarterCode.Models.Review", b =>
                 {
                     b.HasOne("eCommerceStarterCode.Models.Product", "Product")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("eCommerceStarterCode.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Product");
@@ -399,18 +401,32 @@ namespace eCommerceStarterCode.Migrations
             modelBuilder.Entity("eCommerceStarterCode.Models.ShoppingCart", b =>
                 {
                     b.HasOne("eCommerceStarterCode.Models.Product", "Product")
-                        .WithMany()
+                        .WithMany("ShoppingCarts")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("eCommerceStarterCode.Models.User", "User")
-                        .WithMany()
+                        .WithMany("ShoppingCarts")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Product");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("eCommerceStarterCode.Models.Product", b =>
+                {
+                    b.Navigation("Reviews");
+
+                    b.Navigation("ShoppingCarts");
+                });
+
+            modelBuilder.Entity("eCommerceStarterCode.Models.User", b =>
+                {
+                    b.Navigation("Reviews");
+
+                    b.Navigation("ShoppingCarts");
                 });
 #pragma warning restore 612, 618
         }
