@@ -17,7 +17,7 @@ namespace eCommerceStarterCode.Controllers
             _context = context;
         }
 
-        // GET 
+        // GET ALL
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -39,6 +39,7 @@ namespace eCommerceStarterCode.Controllers
                 .Where(sc => sc.UserId == userId)
                 .Include(sc => sc.Product)
                 .Select(sc => new {
+                    sc.ShoppingCartId,
                     sc.UserId,
                     sc.ProductId,
                     sc.Product.Name,
@@ -60,10 +61,38 @@ namespace eCommerceStarterCode.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] ShoppingCart value)
         {
+            var shoppingCart = _context.ShoppingCarts.FirstOrDefault(u => u.UserId == value.UserId && u.ProductId == value.ProductId);
+            if (shoppingCart == null)
+            {
+                _context.ShoppingCarts.Add(value);
+                _context.SaveChanges();
+                return StatusCode(201, value);
+            } else
+            {
+                
+                shoppingCart.Quantity = shoppingCart.Quantity +1;
+                _context.SaveChanges();
+                return Ok(shoppingCart);
+            }
+            
+        } 
 
-            _context.ShoppingCarts.Add(value);
-            _context.SaveChanges();
-            return StatusCode(201, value);
+        // PUT
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] ShoppingCart value)
+        {
+            var shoppingCart = _context.ShoppingCarts.FirstOrDefault(sc => sc.ShoppingCartId == id);
+            if (value.Quantity <= 0)
+            {
+                _context.Remove(shoppingCart);
+                _context.SaveChanges();
+                return Ok();
+            } else
+            {
+                shoppingCart.Quantity = value.Quantity;
+                _context.SaveChanges();
+                return Ok(shoppingCart);
+            }
         }
 
         // DELETE 
